@@ -9,9 +9,8 @@
 4.调用方便只需要一行就可以发送请求接收返回数据
 
 #例子
-查看工程中的Demo里面有很详细的介绍，下面只展示出来一个
+查看工程中的Demo里面有很详细的介绍，下面只展示出来一个 接口返回的Json是实体类的形式
 
-// 接口返回的是实体类的形式
 		GetRequest(new TestNetworkRequest(),
 				new BaseEntityResponse<WeatherInfo>(WeatherInfo.class) {
 

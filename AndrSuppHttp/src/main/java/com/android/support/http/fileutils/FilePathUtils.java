@@ -17,6 +17,9 @@ import android.os.Environment;
  */
 public class FilePathUtils {
 
+	/**app缓存root目录,没有前面的Environment.getExternalStorageDirectory()*/
+	public static final String APP_CACHE_ROOT_PATH = "Android/data/";
+
 	/**
 	 * {@link #getExternalStorageState()} returns MEDIA_MOUNTED if the media is
 	 * present and mounted at its mount point with read/write access.
@@ -57,18 +60,33 @@ public class FilePathUtils {
 
 	/**
 	 * 根据dir参数在缓存根路径上创建文件夹
-	 * 
+	 *
 	 * @param context
 	 * @param dir
 	 *            例如:cache/network
 	 * @return
 	 */
-	private final static File getCachePath(Context context, String dir) {
-		String appCacheRootPath = context.getApplicationInfo().packageName
-				.replace(".", "/");
-		return getCacheDirectory(context, appCacheRootPath + "/" + dir);
+	public final static File getCachePath(Context context, String dir) {
+		String packageName = context.getApplicationInfo().packageName;
+		return getCacheDirectory(context,
+				APP_CACHE_ROOT_PATH + packageName + "/" + dir);
 
 	}
+
+//	/**
+//	 * 根据dir参数在缓存根路径上创建文件夹
+//	 *
+//	 * @param context
+//	 * @param dir
+//	 *            例如:cache/network
+//	 * @return
+//	 */
+//	private final static File getCachePath(Context context, String dir) {
+//		String appCacheRootPath = context.getApplicationInfo().packageName
+//				.replace(".", "/");
+//		return getCacheDirectory(context, appCacheRootPath + "/" + dir);
+//
+//	}
 
 	/**
 	 * Returns specified application cache directory. Cache directory will be

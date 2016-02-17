@@ -17,14 +17,26 @@ android {
     }
     productFlavors {
     }
-
-    useLibrary 'org.apache.http.legacy'
 }
 
 dependencies {
     compile 'com.android.support:appcompat-v7:23.+'
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-
-    compile 'org.apache.httpcomponents:httpcore:4.4.2'
+    compile files('libs/httpclient-4.5.1.jar')
+    compile files('libs/httpcore-4.4.3.jar')
 }
+
+//task to delete the old jar
+task deleteOldJar(type: Delete) {
+    delete 'release/AndroidPlugin.jar'
+}
+//task to export contents as jar
+task exportJar(type: Copy) {
+    from('build/intermediates/bundles/release/')
+    into('release/')
+    include('classes.jar')
+///Give whatever name you want to give
+    rename('classes.jar', 'AndroidPlugin.jar')
+}
+exportJar.dependsOn(deleteOldJar, build)

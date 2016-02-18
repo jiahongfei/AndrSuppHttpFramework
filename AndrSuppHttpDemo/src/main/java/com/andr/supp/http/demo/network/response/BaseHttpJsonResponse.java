@@ -7,6 +7,7 @@ import org.apache.http.HeaderElement;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpResponseException;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSONObject;
@@ -30,7 +31,10 @@ public abstract class BaseHttpJsonResponse implements IBaseResponse {
 
 		if (null != headers){
 			//根据返回的header取出字符集
-			charset = getHeadersCharset(headers);
+			String tmpCharset = getHeadersCharset(headers);
+			if(!TextUtils.isEmpty(tmpCharset)){
+				charset = tmpCharset;
+			}
 		}
 
 		//将返回的byte数组转换成字符串

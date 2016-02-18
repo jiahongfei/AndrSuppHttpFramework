@@ -1,11 +1,11 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 23
+    compileSdkVersion 11
     buildToolsVersion "23.0.2"
     defaultConfig {
         minSdkVersion 11
-        targetSdkVersion 23
+        targetSdkVersion 11
         versionCode 1
         versionName "1.0"
     }
@@ -20,16 +20,13 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:23.+'
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    compile files('libs/httpclient-4.5.1.jar')
-    compile files('libs/httpcore-4.4.3.jar')
+    compile('com.android.support:support-v4:23.1.0')
 }
 
 //task to delete the old jar
 task deleteOldJar(type: Delete) {
-    delete 'release/AndroidPlugin.jar'
+    delete 'release/andrsupphttp.jar'
 }
 //task to export contents as jar
 task exportJar(type: Copy) {
@@ -37,6 +34,6 @@ task exportJar(type: Copy) {
     into('release/')
     include('classes.jar')
 ///Give whatever name you want to give
-    rename('classes.jar', 'AndroidPlugin.jar')
+    rename('classes.jar', 'andrsupphttp.jar')
 }
 exportJar.dependsOn(deleteOldJar, build)

@@ -12,6 +12,7 @@ public class TestNetworkRequest extends BaseHttpRequest {
 	public String getAbsoluteUrl() {
 		//天气预报接口返回Json
 		return ProtocolDef.URL_WEATHER;
+//		return "http://www.baidu.com/";
 	}
 
 }

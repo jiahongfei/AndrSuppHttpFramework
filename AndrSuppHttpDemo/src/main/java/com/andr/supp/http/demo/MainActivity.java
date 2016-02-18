@@ -19,9 +19,13 @@ import com.android.support.http.inetworklistener.IBaseResponse;
 import com.android.support.http.networkhandler.BaseErrorListener;
 import com.android.support.http.networkhandler.BaseHttpFileResponse;
 import com.android.support.http.networkhandler.BaseStateListener;
+import com.android.support.http.networkutils.AsyncNetworkUtils;
 import com.android.support.http.networkutils.activity.BaseNetworkActivity;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
+import android.widget.Toast;
 
 /**
  * 测试http,继承BaseNetworkActivity可以使用网络方法
@@ -47,6 +51,12 @@ public class MainActivity extends BaseNetworkActivity {
 		// testDownloadNetwork();
 
 		// testUploadImageData();
+	}
+
+	private void testHttps(){
+		//https需要自己创建AsyncNetworkUtils
+//		AsyncNetworkUtils asyncNetworkUtils = new AsyncNetworkUtils(true);
+//		asyncNetworkUtils.GetRequest()
 	}
 
 	private void testUploadImageData() {
@@ -156,6 +166,7 @@ public class MainActivity extends BaseNetworkActivity {
 					public void onSuccess(WeatherInfo t) throws Exception {
 						// 正确的返回处理
 						Log.e("", "succeed");
+						mHandler.sendEmptyMessage(0);
 					}
 				}, new BaseErrorListener(true, true, true) {
 
@@ -165,7 +176,25 @@ public class MainActivity extends BaseNetworkActivity {
 						// 错误时返回处理，两种错误
 						// 1.网络链接错误（没有网络、超时等）
 						// 2.返回的数据错误（解析错误、服务器返回错误结果）
+						mHandler.sendEmptyMessage(1);
 					}
 				});
 	}
+
+	private Handler mHandler = new Handler(new Handler.Callback() {
+		@Override
+		public boolean handleMessage(Message msg) {
+			switch (msg.what){
+				case 0: {
+					Toast.makeText(getApplicationContext(), "succeed", Toast.LENGTH_SHORT).show();
+					break;
+				}
+				case 1:{
+					Toast.makeText(getApplicationContext(), "failure", Toast.LENGTH_SHORT).show();
+					break;
+				}
+			}
+			return false;
+		}
+	});
 }

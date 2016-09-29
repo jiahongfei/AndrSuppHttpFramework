@@ -16,22 +16,31 @@ public class SyncNetworkUtils extends BaseNetwork {
      *
      * @return
      */
-    public static SyncNetworkUtils getSyncNetworkUtils() {
+    public static SyncNetworkUtils getSyncNetworkUtils(boolean fixNoHttpResponseException) {
         if (null == sNetworkUtils) {
-            newInstance();
+            newInstance(fixNoHttpResponseException);
         }
         return sNetworkUtils;
     }
 
-    private static synchronized void newInstance() {
+    /**
+     * 网络工具类,单例
+     *
+     * @return
+     */
+    public static SyncNetworkUtils getSyncNetworkUtils() {
         if (null == sNetworkUtils) {
-            sNetworkUtils = new SyncNetworkUtils();
+            newInstance(false);
+        }
+        return sNetworkUtils;
+    }
+
+    private static synchronized void newInstance(boolean fixNoHttpResponseException) {
+        if (null == sNetworkUtils) {
+            sNetworkUtils = new SyncNetworkUtils(fixNoHttpResponseException);
         }
     }
 
-    private SyncNetworkUtils(){
-        this(false);
-    }
 
     private SyncNetworkUtils(boolean fixNoHttpResponseException) {
         AsyncHttpClient asyncHttpClient = new SyncHttpClient(fixNoHttpResponseException, 80, 443);

@@ -17,19 +17,27 @@ public class AsyncNetworkUtils extends BaseNetwork {
      */
     public static AsyncNetworkUtils getAsyncNetworkUtils() {
         if (null == sNetworkUtils) {
-            newInstance();
+            newInstance(false);
         }
         return sNetworkUtils;
     }
 
-    private static synchronized void newInstance() {
+    /**
+     * 网络工具类,单例
+     *
+     * @return
+     */
+    public static AsyncNetworkUtils getAsyncNetworkUtils(boolean fixNoHttpResponseException) {
         if (null == sNetworkUtils) {
-            sNetworkUtils = new AsyncNetworkUtils();
+            newInstance(fixNoHttpResponseException);
         }
+        return sNetworkUtils;
     }
 
-    private AsyncNetworkUtils(){
-        this(false);
+    private static synchronized void newInstance(boolean fixNoHttpResponseException) {
+        if (null == sNetworkUtils) {
+            sNetworkUtils = new AsyncNetworkUtils(fixNoHttpResponseException);
+        }
     }
 
     /**
